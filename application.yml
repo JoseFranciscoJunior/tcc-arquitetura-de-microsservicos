@@ -1,26 +1,33 @@
+# Especifica a versão do Docker Compose
 version: '3.3'
+
+# Nesta seção será especificada a configuração de cada container.
 services:
+  # Container do banco de dados.
   mysql:
+    # Imagem utilizada no container.
     image: mysql:5.6
+    # Nome do Container.
     container_name: mysql
+    # Aqui são passados os parametros usuário, senha, nome do banco a ser criado e o host.
     environment:
       - MYSQL_USER=root
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=microservice
       - MYSQL_ROOT_HOST=%
+    # Porta de acesso ao banco de dados.
     ports:
       - 3306:3306
 
-
+  # Container do discovery.
   discovery:
     stdin_open: true
     tty: true
     build:
       context: discovery
+      # Especificando o arquivo de configurações Dockerfile.
       dockerfile: Dockerfile
     container_name: discovery
-    # volumes:
-    #   - ./config-server:/tmp
     ports:
       - 8081:8081
 
@@ -32,14 +39,13 @@ services:
       context: gateway
       dockerfile: Dockerfile
     container_name: gateway
-    # volumes:
-    #   - .:/tmp
     ports:
       - 8080:8080
+    # Indica as dependências para a criação desta imagem.
     depends_on:
       - discovery
 
-      
+
   auth:
     stdin_open: true
     tty: true
@@ -47,8 +53,6 @@ services:
       context: auth
       dockerfile: Dockerfile
     container_name: auth
-    # volumes:
-    #   - .:/tmp
     ports:
       - 8083:8083
     depends_on:
@@ -62,11 +66,8 @@ services:
       context: course
       dockerfile: Dockerfile
     container_name: course
-    # volumes:
-    #   - .:/tmp
     ports:
       - 8082:8082
     depends_on:
       - mysql
       - discovery
-    
