@@ -18,5 +18,5 @@ public class AuthApplicationTests {
     public void test() {
         System.out.println(new BCryptPasswordEncoder().encode("12345"));
     }
-
+//   Senha criptografada: $2a$10$klAuTqs3HsFo0M0Pd9vo4uQ3tlgbIRVPIBueKYmzBqkFTaimos4Vq
 }

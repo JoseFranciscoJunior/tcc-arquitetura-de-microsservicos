@@ -31,7 +31,6 @@ services:
     ports:
       - 8081:8081
 
-
   gateway:
     stdin_open: true
     tty: true
@@ -44,7 +43,6 @@ services:
     # Indica as dependências para a criação desta imagem.
     depends_on:
       - discovery
-
 
   auth:
     stdin_open: true
