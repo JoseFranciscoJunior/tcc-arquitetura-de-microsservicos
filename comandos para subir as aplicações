@@ -8,10 +8,11 @@ Executando o Banco de Dados
 
 Como executar cada projeto
 
-    docker run -d --name discovery                                  -p 8081:8081 discovery-app
-    docker run -d --name gateway   --link discovery                 -p 8080:8080 gateway-app
-    docker run -d --name course    --link discovery  --link mysql   -p 8082:8082 course-app
-    docker run -d --name auth      --link discovery  --link mysql   -p 8083:8083 auth-app
+    docker run -d --name discovery                                          -p 8081:8081 discovery-app
+    docker run -d --name gateway        --link discovery                    -p 8080:8080 gateway-app
+    docker run -d --name course         --link discovery  --link mysql      -p 8082:8082 course-app
+    docker run -d --name discipline     --link discovery  --link mysql      -p 8084:8084 discipline-app
+    docker run -d --name auth           --link discovery  --link mysql      -p 8083:8083 auth-app
 
 
 Subir aplicações através do docker-composer:

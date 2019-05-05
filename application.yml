@@ -69,3 +69,16 @@ services:
     depends_on:
       - mysql
       - discovery
+
+  discipline:
+    stdin_open: true
+    tty: true
+    build:
+      context: discipline
+      dockerfile: Dockerfile
+    container_name: discipline
+    ports:
+      - 8084:8084
+    depends_on:
+      - mysql
+      - discovery
