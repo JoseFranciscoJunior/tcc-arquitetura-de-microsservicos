@@ -48,3 +48,5 @@ public class SecurityCredentialsConfig extends SecurityTokenConfig {
         return new BCryptPasswordEncoder();
     }
 }
+
+

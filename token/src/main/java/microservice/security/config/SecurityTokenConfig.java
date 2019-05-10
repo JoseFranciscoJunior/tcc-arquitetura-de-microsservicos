@@ -31,6 +31,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/**/swagger-resources/**", "/**/webjars/springfox-swagger-ui/**", "/**/v2/api-docs/**").permitAll()
                 .antMatchers("/course/v1/admin/**").hasRole("ADMIN")
                 .antMatchers("/auth/user/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/discipline/v1/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated();
     }
 

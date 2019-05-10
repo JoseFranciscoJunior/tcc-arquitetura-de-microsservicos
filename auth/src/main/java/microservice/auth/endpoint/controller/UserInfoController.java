@@ -19,9 +19,11 @@ import java.security.Principal;
 public class UserInfoController {
 
     @GetMapping(path = "info", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "Will retrieve the information from the user available in the token", response = ApplicationUser.class)
+    @ApiOperation(value = "Recuperará as informações do usuário disponíveis no token.", response = ApplicationUser.class)
     public ResponseEntity<ApplicationUser> getUserInfo(Principal principal) {
         ApplicationUser applicationUser = (ApplicationUser) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         return new ResponseEntity<>(applicationUser, HttpStatus.OK);
     }
 }
+
+
