@@ -11,9 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("v1/admin/course")
@@ -27,5 +27,23 @@ public class CourseController {
     @ApiOperation(value = "List all available courses", response = Course[].class)
     public ResponseEntity<Iterable<Course>> list(Pageable pageable) {
         return new ResponseEntity<>(courseService.list(pageable), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/find-by-id", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "List a course by id", response = Course[].class)
+    public ResponseEntity<Optional<Course>> findById(@RequestParam("id") Long id) {
+        return new ResponseEntity<>(courseService.findById(id), HttpStatus.OK);
+    }
+
+    @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "List a course by id", response = Course[].class)
+    public ResponseEntity<Optional<Course>> save(@RequestBody Course course) {
+        return new ResponseEntity(courseService.save(course), HttpStatus.OK);
+    }
+
+    @DeleteMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "List a course by id", response = Course[].class)
+    public void deleteById(@RequestParam("id") Long id) {
+        courseService.deleteById(id);
     }
 }
