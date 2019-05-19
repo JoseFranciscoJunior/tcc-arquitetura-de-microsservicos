@@ -29,20 +29,26 @@ public class CourseController {
         return new ResponseEntity<>(courseService.list(pageable), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/find-by-id", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/find-by-id/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "List a course by id", response = Course[].class)
-    public ResponseEntity<Optional<Course>> findById(@RequestParam("id") Long id) {
+    public ResponseEntity<Optional<Course>> findById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(courseService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "List a course by id", response = Course[].class)
+    @ApiOperation(value = "Save a course", response = Course[].class)
     public ResponseEntity<Optional<Course>> save(@RequestBody Course course) {
         return new ResponseEntity(courseService.save(course), HttpStatus.OK);
     }
 
+    @PutMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "Update a course", response = Course[].class)
+    public ResponseEntity<Optional<Course>> update(@RequestBody Course course) {
+        return new ResponseEntity(courseService.update(course), HttpStatus.OK);
+    }
+
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "List a course by id", response = Course[].class)
+    @ApiOperation(value = "Delete a course", response = Course[].class)
     public void deleteById(@RequestParam("id") Long id) {
         courseService.deleteById(id);
     }

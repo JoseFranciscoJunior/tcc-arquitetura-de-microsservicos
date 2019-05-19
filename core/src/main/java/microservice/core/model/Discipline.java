@@ -21,4 +21,7 @@ public class Discipline implements AbstractEntity {
     @NotNull(message = "The field 'title' is mandatory")
     @Column(nullable = false)
     private String title;
+    @NotNull(message = "The field 'courseId' is mandatory")
+    @Column(nullable = false)
+    private Long courseId;
 }

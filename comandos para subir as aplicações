@@ -17,4 +17,4 @@ Como executar cada projeto
 
 Subir aplicações através do docker-composer:
 
-        docker-compose -f application.yml up
+        docker-compose -f docker_compose.yml up
