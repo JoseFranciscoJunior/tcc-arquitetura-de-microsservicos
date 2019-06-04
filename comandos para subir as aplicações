@@ -17,4 +17,11 @@ Como executar cada projeto
 
 Subir aplicações através do docker-composer:
 
+        docker-compose -e JWT_PRIVATE_KEY=qxBEEQv7E8aviX1KUcdOiF5ve5COUPAr -f docker_compose.yml up
         docker-compose -f docker_compose.yml up
+
+
+
+
+
+    docker run -it --name discipline     --link discovery  --link mysql --net microservices_default      -p 8084:8084 discipline-app

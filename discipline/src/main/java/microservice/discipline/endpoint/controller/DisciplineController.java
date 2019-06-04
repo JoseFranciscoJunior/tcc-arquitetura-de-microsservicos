@@ -31,7 +31,7 @@ public class DisciplineController {
         return new ResponseEntity<>(disciplineService.list(pageable), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/find-by-id/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "List a discipline by id", response = Discipline[].class)
     public ResponseEntity<Optional<Discipline>> findById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(disciplineService.findById(id), HttpStatus.OK);

@@ -26,7 +26,3 @@ spring:
     url: jdbc:mysql://mysql:3306/microservice?allowPublicKeyRetrieval=true&sslMode=DISABLED
     username: root
     password: root
-
-jwt:
-  config:
-    type: signed

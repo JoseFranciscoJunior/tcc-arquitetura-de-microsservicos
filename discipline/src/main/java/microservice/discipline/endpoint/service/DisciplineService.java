@@ -5,7 +5,6 @@ import com.netflix.discovery.EurekaClient;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import microservice.core.model.Course;
 import microservice.core.model.Discipline;
@@ -67,19 +66,16 @@ public class DisciplineService {
         disciplineRepository.deleteById(id);
     }
 
-    @HystrixCommand(fallbackMethod = "unavailableService")
     private String getUrlServicoCurso() {
-        InstanceInfo info = eurekaClient.getApplication("course")
-                .getInstances().iterator().next();
+        InstanceInfo info = eurekaClient
+                .getApplication("course").getInstances().iterator().next();
         if (info == null) {
             log.info("Unavailable service");
         }
-        return String.format("http://%s:%d/course/v1/admin/course/find-by-id/",
-                info.getHostName(), info.getPort());
+        return String.format("http://%s:%d/v1/admin/course/", info.getHostName(), info.getPort());
     }
 
     @HystrixCommand(fallbackMethod = "unavailableService")
-    @SneakyThrows
     private boolean validateCourse(Discipline discipline, String authHeader) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
@@ -99,3 +95,7 @@ public class DisciplineService {
         throw new NotFoundException("Unavailable service!");
     }
 }
+
+
+
+

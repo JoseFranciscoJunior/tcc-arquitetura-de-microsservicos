@@ -29,7 +29,7 @@ public class CourseController {
         return new ResponseEntity<>(courseService.list(pageable), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/find-by-id/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "List a course by id", response = Course[].class)
     public ResponseEntity<Optional<Course>> findById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(courseService.findById(id), HttpStatus.OK);
