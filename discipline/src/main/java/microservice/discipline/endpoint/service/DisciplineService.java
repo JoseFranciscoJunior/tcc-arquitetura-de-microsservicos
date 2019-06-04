@@ -3,7 +3,6 @@ package microservice.discipline.endpoint.service;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import microservice.core.model.Course;
@@ -41,24 +40,22 @@ public class DisciplineService {
         return discipline;
     }
 
-    public Discipline save(Discipline discipline, String authHeader) throws NotFoundException {
-        if (!validateCourse(discipline, authHeader)) {
-            log.info("Invalid course id");
-            throw new NotFoundException("Invalid course id");
-        } else {
+    @HystrixCommand(fallbackMethod = "unavailableService")
+    public Discipline save(Discipline discipline, String authHeader) {
+        if (validateCourse(discipline, authHeader)) {
             log.info("Saving a discipline...");
             return disciplineRepository.save(discipline);
         }
+        return null;
     }
 
-    public Discipline update(Discipline discipline, String authHeader) throws NotFoundException {
-        if (!validateCourse(discipline, authHeader)) {
-            log.info("Invalid course id");
-            throw new NotFoundException("Invalid course id");
-        } else {
+    @HystrixCommand(fallbackMethod = "unavailableService")
+    public Discipline update(Discipline discipline, String authHeader) {
+        if (validateCourse(discipline, authHeader)) {
             log.info("Update a discipline...");
             return disciplineRepository.save(discipline);
         }
+        return null;
     }
 
     public void deleteById(Long id) {
@@ -75,7 +72,6 @@ public class DisciplineService {
         return String.format("http://%s:%d/v1/admin/course/", info.getHostName(), info.getPort());
     }
 
-    @HystrixCommand(fallbackMethod = "unavailableService")
     private boolean validateCourse(Discipline discipline, String authHeader) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
@@ -91,8 +87,10 @@ public class DisciplineService {
         return true;
     }
 
-    public void unavailableService() throws NotFoundException {
-        throw new NotFoundException("Unavailable service!");
+    public Discipline unavailableService(Discipline discipline, String authHeader) {
+        String message = "Unavailable service!";
+        log.error(message.concat(discipline.toString()));
+        return null;
     }
 }
 

@@ -41,14 +41,18 @@ public class DisciplineController {
     @ApiOperation(value = "Save a discipline", response = Discipline[].class)
     public ResponseEntity<Optional<Discipline>> save(@RequestBody Discipline discipline, HttpServletRequest request) throws NotFoundException {
         String authToken = request.getHeader("Authorization");
-        return new ResponseEntity(disciplineService.save(discipline, authToken), HttpStatus.OK);
+        Optional<Discipline> addedDiscipline = Optional.ofNullable(disciplineService.save(discipline, authToken));
+        HttpStatus status = (addedDiscipline.isPresent()) ? HttpStatus.CREATED : HttpStatus.SERVICE_UNAVAILABLE;
+        return new ResponseEntity(addedDiscipline, status);
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "Update a discipline", response = Discipline[].class)
     public ResponseEntity<Optional<Discipline>> update(@RequestBody Discipline discipline, HttpServletRequest request) throws NotFoundException {
         String authToken = request.getHeader("Authorization");
-        return new ResponseEntity(disciplineService.update(discipline, authToken), HttpStatus.OK);
+        Optional<Discipline> addedDiscipline = Optional.ofNullable(disciplineService.update(discipline, authToken));
+        HttpStatus status = (addedDiscipline.isPresent()) ? HttpStatus.OK : HttpStatus.SERVICE_UNAVAILABLE;
+        return new ResponseEntity(addedDiscipline, status);
     }
 
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

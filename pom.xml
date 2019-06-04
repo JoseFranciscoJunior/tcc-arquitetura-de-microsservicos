@@ -15,12 +15,15 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>discovery</module>
+        <module>auth</module>
+        <module>token</module>
+        <module>core</module>
+        <module>gateway</module>
         <module>course</module>
         <module>discipline</module>
-        <module>core</module>
-        <module>token</module>
-        <module>gateway</module>
     </modules>
+
     <properties>
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
         <nimbus-jose.version>7.0</nimbus-jose.version>
@@ -28,7 +31,25 @@
         <swagger.version>2.9.2</swagger.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <docker.version>1.4.2</docker.version>
+        <dockerfile.skip>true</dockerfile.skip>
     </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>dockerfile-maven-plugin</artifactId>
+                    <version>${docker.version}</version>
+                    <configuration>
+                        <repository>${project.artifactId}-app</repository>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

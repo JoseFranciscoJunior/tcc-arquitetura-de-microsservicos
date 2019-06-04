@@ -1,6 +1,7 @@
 	Como construir cada projeto
 
     mvn -DskipTests=true clean package dockerfile:build
+    mvn -DskipTests=true -Ddockerfile.skip=false clean package dockerfile:build
 
 Executando o Banco de Dados
 
@@ -14,14 +15,8 @@ Como executar cada projeto
     docker run -d --name discipline     --link discovery  --link mysql      -p 8084:8084 discipline-app
     docker run -d --name auth           --link discovery  --link mysql      -p 8083:8083 auth-app
 
-
 Subir aplicações através do docker-composer:
 
-        docker-compose -e JWT_PRIVATE_KEY=qxBEEQv7E8aviX1KUcdOiF5ve5COUPAr -f docker_compose.yml up
-        docker-compose -f docker_compose.yml up
+    docker-compose -f docker_compose.yml up
 
-
-
-
-
-    docker run -it --name discipline     --link discovery  --link mysql --net microservices_default      -p 8084:8084 discipline-app
+docker run -it --name discipline  -e JWT_PRIVATE_KEY=qxBEEQv7E8aviX1KUcdOiF5ve5COUPAr   --link discovery  --link mysql   --net microservices_default   -p 8084:8084 discipline-app

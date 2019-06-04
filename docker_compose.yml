@@ -15,7 +15,6 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=microservice
       - MYSQL_ROOT_HOST=%
-      - JWT_PRIVATE_KEY=qxBEEQv7E8aviX1KUcdOiF5ve5COUPAr
     # Porta de acesso ao banco de dados.
     ports:
       - 3306:3306
@@ -78,7 +77,6 @@ services:
     depends_on:
       - mysql
       - discovery
-
 
   discipline:
     stdin_open: true
