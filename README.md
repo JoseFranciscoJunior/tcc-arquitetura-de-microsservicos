@@ -1,1 +1,26 @@
 Esta arquitetura de microsserviços foi criada para que os novos softwares desenvolvidos pelo curso de Engenharia da Computação, utilizando essa arquitetura, sejam padronizados e integrados, facilitando o gerenciamento desses sistemas.
+
+Como construir cada projeto
+
+    mvn -DskipTests=true clean package dockerfile:build
+    mvn -DskipTests=true -Ddockerfile.skip=false clean package dockerfile:build
+
+Executando o Banco de Dados
+
+    docker run -it --name mysql -e MYSQL_DATABASE=microservice -e MYSQL_ROOT_PASSWORD=root -e MYSQL_ROOT_HOST=% -p 3306:3306 mysql:5.6
+
+Como executar cada projeto
+
+    docker run -d --name discovery                                          -p 8081:8081 discovery-app
+    docker run -d --name gateway        --link discovery                    -p 8080:8080 gateway-app
+    docker run -d --name course         --link discovery  --link mysql      -p 8082:8082 course-app
+    docker run -d --name discipline     --link discovery  --link mysql      -p 8084:8084 discipline-app
+    docker run -d --name auth           --link discovery  --link mysql      -p 8083:8083 auth-app
+
+Subir aplicações através do docker-composer:
+
+    docker-compose -f docker_compose.yml up
+
+docker run -it --name discipline  -e JWT_PRIVATE_KEY=qxBEEQv7E8aviX1KUcdOiF5ve5COUPAr   --link discovery  --link mysql   --net microservices_default   -p 8084:8084 discipline-app
+
+
